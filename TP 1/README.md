@@ -266,7 +266,7 @@ L'adresse ip 92.146.54.88 n'a pas de nom de domaine
 
 # IV. Wireshark
 
-![chart-rk](./img/shark.jpg)
+![chatrk](./img/shark.jpg)
 
 - 🌞 utilisez le pour observer les trames qui circulent entre vos deux carte Ethernet. Mettez en évidence :
   ![passerelle](./img/passerelle.PNG)
