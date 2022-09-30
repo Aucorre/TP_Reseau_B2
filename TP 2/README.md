@@ -11,30 +11,10 @@ Dans ce TP on va approfondir trois protocoles, qu'on a survolé jusqu'alors :
 
 - [TP2 : Ethernet, IP, et ARP](#tp2--ethernet-ip-et-arp)
 - [Sommaire](#sommaire)
-- [0. Prérequis](#0-prérequis)
 - [I. Setup IP](#i-setup-ip)
 - [II. ARP my bro](#ii-arp-my-bro)
-- [II.5 Interlude hackerzz](#ii5-interlude-hackerzz)
 - [III. DHCP you too my brooo](#iii-dhcp-you-too-my-brooo)
 - [IV. Avant-goût TCP et UDP](#iv-avant-goût-tcp-et-udp)
-
-# 0. Prérequis
-
-**Il vous faudra deux machines**, vous êtes libres :
-
-- toujours possible de se connecter à deux avec un câble
-- sinon, votre PC + une VM ça fait le taf, c'est pareil
-  - je peux aider sur le setup, comme d'hab
-
-> Je conseille à tous les gens qui n'ont pas de port RJ45 de go PC + VM pour faire vous-mêmes les manips, mais on fait au plus simple hein.
-
----
-
-**Toutes les manipulations devront être effectuées depuis la ligne de commande.** Donc normalement, plus de screens.
-
-**Pour Wireshark, c'est pareil,** NO SCREENS. La marche à suivre :
-
-**Si vous voyez le p'tit pote 🦈 c'est qu'il y a un PCAP à produire et à mettre dans votre dépôt git de rendu.**
 
 # I. Setup IP
 
