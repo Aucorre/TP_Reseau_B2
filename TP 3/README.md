@@ -335,23 +335,59 @@ option domain-name-servers 8.8.8.8;
 Created symlink /etc/systemd/system/multi-user.target.wants/dhcpd.service → /usr/lib/systemd/system/dhcpd.service.
 ```
 
-> Il est possible d'utilise la commande `dhclient` pour forcer à la main, depuis la ligne de commande, la demande d'une IP en DHCP, ou renouveler complètement l'échange DHCP (voir `dhclient -h` puis call me et/ou Google si besoin d'aide).
+```
+[audy@bob ~]$ ip a
+    [...]
+    2: enp0s8: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+        link/ether 08:00:27:cd:6e:4b brd ff:ff:ff:ff:ff:ff
+        inet 10.3.1.2/24 brd 10.3.1.255 scope global dynamic noprefixroute enp0s8
+        valid_lft 685sec preferred_lft 685sec
+        inet6 fe80::a00:27ff:feaf:5dde/64 scope link noprefixroute
+        valid_lft forever preferred_lft forever
+```
 
 🌞**Améliorer la configuration du DHCP**
 
-- ajoutez de la configuration à votre DHCP pour qu'il donne aux clients, en plus de leur IP :
-  - une route par défaut
-  - un serveur DNS à utiliser
-- récupérez de nouveau une IP en DHCP sur `marcel` pour tester :
-  - `marcel` doit avoir une IP
-    - vérifier avec une commande qu'il a récupéré son IP
-    - vérifier qu'il peut `ping` sa passerelle
-  - il doit avoir une route par défaut
-    - vérifier la présence de la route avec une commande
-    - vérifier que la route fonctionne avec un `ping` vers une IP
-  - il doit connaître l'adresse d'un serveur DNS pour avoir de la résolution de noms
-    - vérifier avec la commande `dig` que ça fonctionne
-    - vérifier un `ping` vers un nom de domaine
+```
+[audy@bob ~]$ ip route
+default via 10.3.1.254 dev enp0s8
+default via 10.3.1.254 dev enp0s8 proto dhcp src 10.3.1.2 metric 100
+10.3.1.0/24 dev enp0s8 proto kernel scope link src 10.3.1.2 metric 100
+[audy@bob ~]$ ping -c 1 1.1.1.1
+PING 1.1.1.1 (1.1.1.1) 56(84) bytes of data.
+64 bytes from 1.1.1.1: icmp_seq=1 ttl=54 time=17.1 ms
+
+--- 1.1.1.1 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 17.144/17.144/17.144/0.000 ms
+```
+
+```
+[audy@bob ~]$ dig google.com
+
+; <<>> DiG 9.16.23-RH <<>> google.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 65062
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 512
+;; QUESTION SECTION:
+;google.com.                    IN      A
+
+;; ANSWER SECTION:
+google.com.             223     IN      A       142.250.178.142
+
+;; Query time: 30 msec
+;; SERVER: 8.8.8.8#53(8.8.8.8)
+;; WHEN: Wed Oct 12 11:44:05 CEST 2022
+;; MSG SIZE  rcvd: 55
+
+[audy@bob ~]$ ping -c 1 ynov.com
+  PING ynov.com (104.26.11.233) 56(84) bytes of data.
+  64 bytes from 104.26.11.233 (104.26.11.233): icmp_seq=1 ttl=54 time=16.8 ms
+```
 
 ### 2. Analyse de trames
 
